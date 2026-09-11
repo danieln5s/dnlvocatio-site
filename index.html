@@ -27,14 +27,24 @@
     <!-- Place your `favicon.ico` in the `public/` folder (already present). Browsers will also request /favicon.ico by default. -->
     <link rel="icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" href="/favicon.ico" />
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QTLPC7Z0BL"></script>
+    <!-- Google tag (gtag.js).
+         The library itself is NOT loaded here. Commands are queued on dataLayer
+         and gtag.js is injected only after the visitor allows analytics, so an
+         undecided or declining visitor produces no requests to Google at all.
+         Loading is handled by src/lib/consent.ts. -->
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
 
-      gtag('config', 'G-QTLPC7Z0BL');
+      gtag('consent', 'default', {
+        ad_storage: 'denied',
+        ad_user_data: 'denied',
+        ad_personalization: 'denied',
+        analytics_storage: 'denied'
+      });
+
+      gtag('js', new Date());
+      gtag('config', 'G-QTLPC7Z0BL', { anonymize_ip: true });
     </script>
   </head>
 

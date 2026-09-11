@@ -1,7 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 
+import ProtectedImage from "@/components/ProtectedImage";
+
 interface Props {
-  src: string;
+  /** Object path inside the private bucket, e.g. `cycling/happy_selfie.jpg`. */
+  path: string;
   alt?: string;
   caption?: string;
   className?: string;
@@ -11,7 +14,7 @@ interface Props {
   preserve?: boolean;
 }
 
-const FadeInImage = ({ src, alt = "", caption, className = "", fit = "cover", preserve = false }: Props) => {
+const FadeInImage = ({ path, alt = "", caption, className = "", fit = "cover", preserve = false }: Props) => {
   const ref = useRef<HTMLDivElement | null>(null);
   const [visible, setVisible] = useState(false);
   const DURATION = 2200; // ms, slower fade
@@ -44,12 +47,15 @@ const FadeInImage = ({ src, alt = "", caption, className = "", fit = "cover", pr
         (className ? ` ${className}` : "")
       }
     >
-      <img
-        src={src}
+      <ProtectedImage
+        path={path}
         alt={alt}
         style={preserve ? { width: "75%" } : undefined}
         className={
           `${preserve ? "mx-auto" : "w-full"} ${preserve ? "h-auto" : "h-[70vh]"} object-${fit} rounded-md`
+        }
+        placeholderClassName={
+          `${preserve ? "mx-auto" : "w-full"} ${preserve ? "aspect-[3/2]" : "h-[70vh]"} rounded-md`
         }
       />
       {caption ? <p className="mt-4 text-center text-sm text-muted-foreground">{caption}</p> : null}

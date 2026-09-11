@@ -2,6 +2,8 @@
 
 Personal portfolio site (React + Vite + Tailwind + shadcn/ui + TypeScript). Deployed to GitHub Pages at dnlvocatio.com.
 
+Photographs are **not** public assets. They live in a private Supabase Storage bucket and are served by an authenticated Edge Function to visitors who verified an email with a one-time code. See [docs/PHOTO-ACCESS-SETUP.md](../docs/PHOTO-ACCESS-SETUP.md).
+
 ## Key locations
 
 - Routes: `src/App.tsx`
@@ -10,15 +12,20 @@ Personal portfolio site (React + Vite + Tailwind + shadcn/ui + TypeScript). Depl
 - UI primitives (shadcn): `src/components/ui/` — do not edit manually
 - Design tokens: `src/index.css`
 - Utilities: `src/lib/`
-- Static assets: `public/`
+- Backend: `supabase/migrations/`, `supabase/functions/photo/`
+- Photo originals: `private-photos/` (gitignored)
+- Public static assets: `public/` — favicon, social.png, robots.txt, CNAME only
 
 ## Validated commands
 
 ```sh
 npm run dev          # Dev server (port 8080)
-npx tsc --noEmit    # Type check
+npm run typecheck    # TypeScript
 npm run lint         # ESLint
-npx vite build      # Production build (cross-platform)
+npm run build        # Production build (cross-platform)
+npm run test         # Vitest
+npm run check:build  # Fail if dist/ leaks photos or secrets
+npm run verify       # All of the above
 ```
 
 ## Conventions
@@ -28,14 +35,16 @@ npx vite build      # Production build (cross-platform)
 - Functional components, arrow functions, default exports
 - All routes in `App.tsx` above the catch-all `*`
 - Journal entries live in the `entries` array at the top of `src/pages/Journal.tsx`, newest first
-- Images in `public/<hobby>/`, referenced by absolute path
+- Photographs: put originals in `private-photos/<gallery>/`, run `npm run photos:migrate`, render with `<ProtectedImage path="<gallery>/<file>" />`. Add `<PhotoAccessGate />` to any page showing photos.
 
 ## Constraints
 
-- No backend or API; fully static SPA
+- Never add a photograph to `public/` or reference one by public URL
+- Enforce photo authorization server-side; CSS hiding and route guards are not access control
+- Only `VITE_`-prefixed values may reach the browser; the service role key never leaves Supabase
 - Do not hand-edit `src/components/ui/` files
 - Do not add npm dependencies without user approval
-- Validate with `npx tsc --noEmit` and `npx vite build` before finishing
+- Validate with `npm run verify` before finishing
 - Keep external links using `target="_blank"` paired with `rel="noopener noreferrer"`
 
 ## Detailed handbook

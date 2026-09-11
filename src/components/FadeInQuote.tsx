@@ -1,15 +1,18 @@
 import { useEffect, useRef, useState } from "react";
 
+import ProtectedImage from "@/components/ProtectedImage";
+
 interface Props {
   quote: string;
   author?: string;
-  authorImage?: string;
+  /** Object path inside the private bucket, e.g. `reading/john_calvin.jpg`. */
+  authorImagePath?: string;
   className?: string;
   /** CSS font-family string to apply to the quote text (optional) */
   fontFamily?: string;
 }
 
-const FadeInQuote = ({ quote, author, authorImage, className = "", fontFamily }: Props) => {
+const FadeInQuote = ({ quote, author, authorImagePath, className = "", fontFamily }: Props) => {
   const ref = useRef<HTMLDivElement | null>(null);
   const [visible, setVisible] = useState(false);
   const DURATION = 2200; // match FadeInImage slow fade
@@ -42,11 +45,12 @@ const FadeInQuote = ({ quote, author, authorImage, className = "", fontFamily }:
       }
     >
       <div className="flex items-start gap-4">
-        {authorImage ? (
-          <img
-            src={authorImage}
+        {authorImagePath ? (
+          <ProtectedImage
+            path={authorImagePath}
             alt={author ?? "author"}
             className="w-16 h-16 rounded-full object-cover flex-shrink-0"
+            placeholderClassName="w-16 h-16 rounded-full flex-shrink-0 p-0"
           />
         ) : null}
 

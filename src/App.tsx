@@ -18,6 +18,8 @@ import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 import Header from "./components/Header";
 import ScrollToTop from "./components/ScrollToTop";
+import PhotoAccessProvider from "./components/PhotoAccessProvider";
+import AnalyticsConsent from "./components/AnalyticsConsent";
 
 const queryClient = new QueryClient();
 
@@ -27,6 +29,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <PhotoAccessProvider>
         <ScrollToTop />
         <Header />
         <Routes>
@@ -48,6 +51,8 @@ const App = () => (
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
+        <AnalyticsConsent />
+        </PhotoAccessProvider>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

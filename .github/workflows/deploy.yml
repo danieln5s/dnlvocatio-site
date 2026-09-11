@@ -30,8 +30,22 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Type check
+        run: npm run typecheck
+
+      - name: Test
+        run: npm run test
+
       - name: Build
         run: npm run build
+        env:
+          # Browser-safe configuration (not secrets). Set these as repository
+          # variables under Settings > Secrets and variables > Actions > Variables.
+          VITE_SUPABASE_URL: ${{ vars.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ vars.VITE_SUPABASE_ANON_KEY }}
+
+      - name: Assert no protected photos or secrets in build output
+        run: npm run check:build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
