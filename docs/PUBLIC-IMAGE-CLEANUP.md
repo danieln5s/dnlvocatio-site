@@ -19,13 +19,13 @@ history even though the working tree no longer contains them.
 
 Commits that added or modified the photo folders:
 
-| Commit | Message |
-| --- | --- |
-| `095bad2` | feat: added 4 hobby pages with pictures |
-| `2a7113d` | feat: remove HDR from photos |
-| `68ac186` | feat: add Reading page and quotes |
-| `c5a8c9c` | feat: add scrolltotop and Google analytics |
-| `6b5e22f` | chore: remove dead code and unused assets, add .gitignore |
+| Commit    | Message                                                               |
+| --------- | --------------------------------------------------------------------- |
+| `095bad2` | feat: added 4 hobby pages with pictures                               |
+| `2a7113d` | feat: remove HDR from photos                                          |
+| `68ac186` | feat: add Reading page and quotes                                     |
+| `c5a8c9c` | feat: add scrolltotop and Google analytics                            |
+| `6b5e22f` | chore: remove dead code and unused assets, add .gitignore             |
 | `5ee23c6` | Restructure site: Journal section, wedding entry, About consolidation |
 
 Anyone can fetch any of these blobs, for example:
@@ -35,7 +35,7 @@ https://github.com/danieln5s/dnlvocatio-site/raw/5ee23c6/public/wedding/primepho
 ```
 
 These URLs keep working after a normal commit. They stop working only after the
-blobs are removed from history *and* GitHub garbage-collects them.
+blobs are removed from history _and_ GitHub garbage-collects them.
 
 ### 2. Previous GitHub Pages deployments
 
@@ -121,7 +121,7 @@ retrievable. Re-deploy from the cleaned `main`.
 
 ### Step 5 — Request removal from third-party caches
 
-- **Google**: Search Console → Removals → *Remove outdated content*, one request
+- **Google**: Search Console → Removals → _Remove outdated content_, one request
   per image URL. Without Search Console, use
   <https://search.google.com/search-console/remove-outdated-content>.
 - **Bing**: <https://www.bing.com/webmasters/contentremoval>
@@ -144,7 +144,7 @@ finished.
 
 ---
 
-## What is *not* affected
+## What is _not_ affected
 
 `public/favicon.ico` and `public/social.png` stay public on purpose. `social.png`
 is the sheep brand graphic used for link previews, not a photograph, and the
@@ -154,12 +154,12 @@ favicon is an ordinary interface icon. Neither is in the protected inventory.
 
 ## Honest summary
 
-| Exposure | Removed by this branch? |
-| --- | --- |
-| Images served from `dnlvocatio.com/<gallery>/…` after the next deploy | Yes |
-| Images in the production build output (`dist/`) | Yes, and enforced by `npm run check:build` |
-| Images in the repository working tree on `main` | Yes, once merged |
-| **Images in public Git history** | **No — Step 2 required** |
-| **Images in previous Pages deployments** | **No — Step 4 required** |
-| **Images in search / archive / social caches** | **No — Step 5 required** |
-| **Copies already downloaded, or in forks and clones** | **Never recoverable** |
+| Exposure                                                              | Removed by this branch?                    |
+| --------------------------------------------------------------------- | ------------------------------------------ |
+| Images served from `dnlvocatio.com/<gallery>/…` after the next deploy | Yes                                        |
+| Images in the production build output (`dist/`)                       | Yes, and enforced by `npm run check:build` |
+| Images in the repository working tree on `main`                       | Yes, once merged                           |
+| **Images in public Git history**                                      | **No — Step 2 required**                   |
+| **Images in previous Pages deployments**                              | **No — Step 4 required**                   |
+| **Images in search / archive / social caches**                        | **No — Step 5 required**                   |
+| **Copies already downloaded, or in forks and clones**                 | **Never recoverable**                      |

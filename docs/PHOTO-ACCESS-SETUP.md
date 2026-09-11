@@ -45,19 +45,19 @@ cache.
 
 ### Key files
 
-| Path | Purpose |
-| --- | --- |
+| Path                                                           | Purpose                                                   |
+| -------------------------------------------------------------- | --------------------------------------------------------- |
 | `supabase/migrations/20260911090000_email_verified_photos.sql` | Tables, RLS, RPCs, auth trigger, bucket, storage policies |
-| `supabase/functions/photo/index.ts` | Authenticated delivery path + access logging |
-| `supabase/functions/_shared/photoPath.ts` | Path allow-list (shared with the tests) |
-| `supabase/functions/_shared/notify.ts` | Optional owner notification |
-| `src/components/PhotoAccessProvider.tsx` | Session state |
-| `src/components/PhotoAccessDialog.tsx` | Email + code UI |
-| `src/components/ProtectedImage.tsx` | Photo or neutral placeholder |
-| `src/components/PhotoAccessGate.tsx` | "View pictures" / signed-in banner |
-| `src/lib/protectedPhotos.ts` | Authenticated fetch + in-memory blob cache |
-| `scripts/migrate-photos.js` | Upload local originals into the private bucket |
-| `scripts/checkBuildArtifacts.js` | Fail the build if photos or secrets leak into `dist/` |
+| `supabase/functions/photo/index.ts`                            | Authenticated delivery path + access logging              |
+| `supabase/functions/_shared/photoPath.ts`                      | Path allow-list (shared with the tests)                   |
+| `supabase/functions/_shared/notify.ts`                         | Optional owner notification                               |
+| `src/components/PhotoAccessProvider.tsx`                       | Session state                                             |
+| `src/components/PhotoAccessDialog.tsx`                         | Email + code UI                                           |
+| `src/components/ProtectedImage.tsx`                            | Photo or neutral placeholder                              |
+| `src/components/PhotoAccessGate.tsx`                           | "View pictures" / signed-in banner                        |
+| `src/lib/protectedPhotos.ts`                                   | Authenticated fetch + in-memory blob cache                |
+| `scripts/migrate-photos.js`                                    | Upload local originals into the private bucket            |
+| `scripts/checkBuildArtifacts.js`                               | Fail the build if photos or secrets leak into `dist/`     |
 
 ---
 
@@ -87,19 +87,19 @@ includes `{{ .Token }}`. The version used here is in
 
 **Authentication → Sign In / Providers → Email**
 
-| Setting | Value | Why |
-| --- | --- | --- |
-| Email OTP expiration | `600` (10 minutes) | Short-lived codes |
-| Email OTP length | `6` | Matches the UI |
-| Confirm email | off | Codes already prove inbox control |
+| Setting              | Value              | Why                               |
+| -------------------- | ------------------ | --------------------------------- |
+| Email OTP expiration | `600` (10 minutes) | Short-lived codes                 |
+| Email OTP length     | `6`                | Matches the UI                    |
+| Confirm email        | off                | Codes already prove inbox control |
 
 **Authentication → Rate Limits**
 
-| Limit | Suggested |
-| --- | --- |
-| Emails sent per hour | `30` |
-| Token verifications (per 5 min, per IP) | `30` |
-| Minimum interval between OTP requests | `60s` |
+| Limit                                   | Suggested |
+| --------------------------------------- | --------- |
+| Emails sent per hour                    | `30`      |
+| Token verifications (per 5 min, per IP) | `30`      |
+| Minimum interval between OTP requests   | `60s`     |
 
 Codes are single-use: Supabase invalidates the OTP once it has been verified.
 The UI enforces a matching 60-second resend cooldown.
@@ -266,25 +266,25 @@ memory for the page session and discarded on sign-out).
 
 Every field is derived server-side:
 
-| Field | Source |
-| --- | --- |
-| `user_id` | The validated access token |
-| `email` | Looked up from `auth.users` inside the RPC, never taken from the request |
-| `occurred_at` | Database `now()` |
-| `event_type`, `outcome` | Set by the Edge Function |
-| `gallery`, `photo_path` | The allow-listed path that was served |
+| Field                   | Source                                                                   |
+| ----------------------- | ------------------------------------------------------------------------ |
+| `user_id`               | The validated access token                                               |
+| `email`                 | Looked up from `auth.users` inside the RPC, never taken from the request |
+| `occurred_at`           | Database `now()`                                                         |
+| `event_type`, `outcome` | Set by the Edge Function                                                 |
+| `gallery`, `photo_path` | The allow-listed path that was served                                    |
 
 ---
 
 ## 7. Sessions
 
-| Behaviour | Value |
-| --- | --- |
-| Access token lifetime | 1 hour |
-| Renewal | Automatic while the tab is open (refresh token rotation) |
+| Behaviour              | Value                                                                        |
+| ---------------------- | ---------------------------------------------------------------------------- |
+| Access token lifetime  | 1 hour                                                                       |
+| Renewal                | Automatic while the tab is open (refresh token rotation)                     |
 | Refresh token lifetime | Supabase default (inactivity-based); re-verification needed after a long gap |
-| Persistence | `localStorage` key `dnlvocatio.photo-access`, managed by supabase-js |
-| Sign-out | Revokes the session, revokes every blob URL, clears the in-memory cache |
+| Persistence            | `localStorage` key `dnlvocatio.photo-access`, managed by supabase-js         |
+| Sign-out               | Revokes the session, revokes every blob URL, clears the in-memory cache      |
 
 During loading, expiry or any error the UI falls back to the **public** state:
 placeholders and a "View pictures" action, never a broken page.

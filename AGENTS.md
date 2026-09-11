@@ -66,18 +66,18 @@ Without Supabase configuration the site runs fine and simply stays in the public
 
 ## Development commands
 
-| Command             | Purpose                                                    |
-| ------------------- | ---------------------------------------------------------- |
-| `npm run dev`       | Start local dev server (port 8080)                         |
-| `npm run build`     | Production build → `dist/` (cross-platform)                |
-| `npm run preview`   | Preview production build locally                           |
-| `npm run lint`      | ESLint (flat config)                                       |
-| `npm run typecheck` | TypeScript type checking                                   |
-| `npm run test`      | Vitest suite                                               |
-| `npm run check:build` | Fail if `dist/` contains protected photos or secrets     |
-| `npm run verify`    | typecheck + lint + build + check:build + test              |
-| `npm run photos:migrate` | Upload `private-photos/` into the private bucket      |
-| `npm run photos:verify`  | Re-verify uploaded objects against local originals    |
+| Command                  | Purpose                                              |
+| ------------------------ | ---------------------------------------------------- |
+| `npm run dev`            | Start local dev server (port 8080)                   |
+| `npm run build`          | Production build → `dist/` (cross-platform)          |
+| `npm run preview`        | Preview production build locally                     |
+| `npm run lint`           | ESLint (flat config)                                 |
+| `npm run typecheck`      | TypeScript type checking                             |
+| `npm run test`           | Vitest suite                                         |
+| `npm run check:build`    | Fail if `dist/` contains protected photos or secrets |
+| `npm run verify`         | typecheck + lint + build + check:build + test        |
+| `npm run photos:migrate` | Upload `private-photos/` into the private bucket     |
+| `npm run photos:verify`  | Re-verify uploaded objects against local originals   |
 
 ## Testing and validation
 
@@ -116,13 +116,13 @@ Also verify affected pages visually with `npm run dev`, in both the public and v
 
 See [.env.example](.env.example). Browser-safe values are prefixed `VITE_`; everything else is a server-side secret held by Supabase and must never appear in `src/` or in a `VITE_` variable.
 
-| Variable | Where | Secret? |
-| --- | --- | --- |
-| `VITE_SUPABASE_URL` | Build / browser | No |
-| `VITE_SUPABASE_ANON_KEY` | Build / browser | No |
-| `SUPABASE_SERVICE_ROLE_KEY` | Edge Function only | **Yes** |
-| `ALLOWED_ORIGINS`, `PROTECTED_PHOTOS_BUCKET` | Edge Function | No |
-| `OWNER_NOTIFICATION_EMAIL`, `RESEND_API_KEY`, `NOTIFICATION_FROM_EMAIL` | Edge Function | **Yes** (optional feature) |
+| Variable                                                                | Where              | Secret?                    |
+| ----------------------------------------------------------------------- | ------------------ | -------------------------- |
+| `VITE_SUPABASE_URL`                                                     | Build / browser    | No                         |
+| `VITE_SUPABASE_ANON_KEY`                                                | Build / browser    | No                         |
+| `SUPABASE_SERVICE_ROLE_KEY`                                             | Edge Function only | **Yes**                    |
+| `ALLOWED_ORIGINS`, `PROTECTED_PHOTOS_BUCKET`                            | Edge Function      | No                         |
+| `OWNER_NOTIFICATION_EMAIL`, `RESEND_API_KEY`, `NOTIFICATION_FROM_EMAIL` | Edge Function      | **Yes** (optional feature) |
 
 The GA4 measurement ID is hardcoded (frontend analytics; not a secret).
 
